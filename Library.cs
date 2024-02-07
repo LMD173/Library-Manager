@@ -80,7 +80,9 @@ public class Library
         borrowedBooks.Add(book);
         books.Remove(book);
     }
-
+    /// <summary>
+    /// Displays all the current non-borrowed books in the library.
+    /// </summary>
     public void ViewBooks()
     {
         foreach (Book book in books)
