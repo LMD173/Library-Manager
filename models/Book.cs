@@ -9,7 +9,7 @@ namespace LibraryProgram.Models;
 public class Book(int id, string title, string author)
 {
     public int Id { get; } = id;
-    public string Title { get; set; } = title;
-    public string Author { get; set; } = author;
+    public string Title { get; } = title;
+    public string Author { get; } = author;
 }
 
