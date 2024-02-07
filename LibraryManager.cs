@@ -29,7 +29,7 @@ public class LibraryManager(string name)
                     library.AddBook();
                     break;
                 case "v":
-                    library.ViewBooks();
+                    library.ViewAvailableBooks();
                     break;
                 case "x":
                     SayGoodbye();
@@ -40,6 +40,9 @@ public class LibraryManager(string name)
                     break;
                 case "r":
                     library.ReturnBook();
+                    break;
+                case "vb":
+                    library.ViewBorrowedBooks();
                     break;
                 default:
                     LogError($"'{option}' is an invalid option. Please try again.");
@@ -58,9 +61,10 @@ public class LibraryManager(string name)
         Console.WriteLine("\n=====================================");
         Console.WriteLine("1. Add a book (a)");
         Console.WriteLine("2. Borrow a book (b)");
-        Console.WriteLine("3. View all books (v)");
-        Console.WriteLine("4. Return a book (r)");
-        Console.WriteLine("5. Exit (x)");
+        Console.WriteLine("3. View available books (v)");
+        Console.WriteLine("4. View borrowed books (vb)");
+        Console.WriteLine("5. Return a book (r)");
+        Console.WriteLine("6. Exit (x)");
         Console.WriteLine("=====================================");
     }
 }

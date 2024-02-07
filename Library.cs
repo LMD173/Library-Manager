@@ -12,7 +12,7 @@ public class Library
     /// The list of current books in the library.
     /// This list was chosen by ChatGPT.
     /// </summary>
-    private readonly List<Book> books = [
+    private readonly List<Book> availableBooks = [
         new(1, "The Hobbit", "J.R.R. Tolkien"),
         new(2, "1984", "George Orwell"),
         new(3, "To Kill a Mockingbird", "Harper Lee"),
@@ -41,14 +41,14 @@ public class Library
             return;
         }
 
-        if (books.Any(b => b.Id == id) || borrowedBooks.Any(b => b.Id == id))
+        if (availableBooks.Any(b => b.Id == id) || borrowedBooks.Any(b => b.Id == id))
         {
             LogError("A book with that ID already exists.");
             return;
         }
 
         Book book = new(id, title, author);
-        books.Add(book);
+        availableBooks.Add(book);
     }
 
     /// <summary>
@@ -63,7 +63,7 @@ public class Library
             return;
         }
 
-        Book? book = books.FirstOrDefault(b => b.Id == id);
+        Book? book = availableBooks.FirstOrDefault(b => b.Id == id);
         if (book == null)
         {
             Book? borrowed = borrowedBooks.FirstOrDefault(b => b.Id == id);
@@ -78,17 +78,40 @@ public class Library
         }
 
         borrowedBooks.Add(book);
-        books.Remove(book);
+        availableBooks.Remove(book);
     }
     /// <summary>
     /// Displays all the current non-borrowed books in the library.
     /// </summary>
-    public void ViewBooks()
+    public void ViewAvailableBooks()
     {
+        if (availableBooks.Count == 0)
+        {
+            Console.WriteLine("No books are currently available.");
+            return;
+        }
+
+        ListBooks(availableBooks);
+    }
+
+    public void ViewBorrowedBooks()
+    {
+        if (borrowedBooks.Count == 0)
+        {
+            Console.WriteLine("No books are currently borrowed.");
+            return;
+        }
+        ListBooks(borrowedBooks);
+    }
+
+    private static void ListBooks(List<Book> books)
+    {
+        Console.WriteLine("-------------------------------------");
         foreach (Book book in books)
         {
             Console.WriteLine($"ID: {book.Id}, Title: {book.Title}, Author: {book.Author}");
         }
+        Console.WriteLine("-------------------------------------");
     }
 
     /// <summary>
@@ -110,7 +133,7 @@ public class Library
             return;
         }
 
-        books.Add(book);
+        availableBooks.Add(book);
         borrowedBooks.Remove(book);
 
         Console.WriteLine($"Book of ID {id} returned successfully.");
